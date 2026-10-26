@@ -1,119 +1,86 @@
 # Bangla License Plate Detection and Deblurring
 
-A research portfolio project exploring deep-learning methods for locating Bangla vehicle license plates and restoring plate crops affected by blur.
+A research project on detecting tilted or rotated Bangla vehicle license plates and restoring blurred plate crops using deep learning.
 
-> **Reproducibility note:** This repository is a cleaned research-code starter. The notebooks need local dataset paths and compatible PyTorch accelerator builds before they can run. Datasets and trained weights are intentionally not included.
+> **Related thesis:** *Multi-staged Deep Learning Framework for Detection and Restoration of Motion-Blur and Distorted Bangla License Plates* (BRAC University, 2026). This is a team research project. Please consult the approved thesis for the full methodology and research context.
 
-## Research overview
+## Research Contributions
 
-The project investigates two complementary tasks:
+- **Dataset development:** I created and prepared the dataset used in this research. The image collection, annotations, and preprocessing support experiments in oriented license-plate localization and image restoration.
+- **Oriented detection:** YOLOv8m-OBB was trained to localize tilted or rotated Bangla license plates using oriented bounding boxes, helping produce plate crops for restoration.
+- **Modified deblurring architecture:** The proposed Line-Curve Block DeblurGAN adds parallel horizontal (1 × 7), vertical (7 × 1), and deformable-convolution branches. The branches are fused, with channel attention and a residual formulation, to model directional and curved details in Bangla plate characters.
+- **Multi-stage workflow:** The research combines plate localization, crop rectification, and image deblurring. Character recognition/OCR is **not included** in the implemented scope described by the thesis.
 
-1. **Oriented license-plate localization:** YOLOv8m-OBB is trained to locate tilted or rotated license plates using four-corner oriented bounding-box annotations.
-2. **Image restoration:** a modified DeblurGAN-v2-style model uses Line-Curve blocks that combine horizontal and vertical strip convolutions with deformable convolution. The training objective includes pixel, edge, perceptual, and adversarial terms.
+## Dataset
 
-A data-preparation notebook rectifies OBB crops and generates clean, motion-blurred, and defocus-blurred plate images. The notebooks are organized by workflow stage; use them as separate experiments unless you have also prepared and tested an end-to-end inference script.
+**[Browse the dataset on Roboflow](https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true)**
 
-## Key Research Contributions
+The thesis describes experiments using 1,991 clean license-plate images, with synthetic defocus-blur and motion-blur samples generated for paired restoration experiments. The reported restoration setup used an 80%/10%/10% train/validation/test split based on clean images, with paired samples generated for the blur conditions.
 
-This project investigates a multi-stage deep-learning framework for detecting and restoring distorted Bangla vehicle license plates.
+Dataset access and reuse depend on the Roboflow project's availability settings and applicable privacy, licensing, and research permissions. Do not redistribute images or annotations without the necessary rights.
 
-### 1. Self-Developed Dataset
-We independently collected and prepared a dataset for our research on Bangla license plate detection and image restoration. The data preparation workflow includes plate annotation and preprocessing for detection and deblurring experiments.
+## Reported Results
 
-Dataset link : https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true
+The figures below are transcribed from the thesis. Detection results are explicitly reported as **validation results**. The thesis labels the restoration-model comparison in Table 5.3 as **validation performance**; confirm the evaluation split before describing these values as test results.
 
-### 2. Oriented License Plate Detection
-We trained and evaluated a YOLOv8m-OBB model to localize Bangla license plates using oriented bounding-box annotations. This approach is designed to support plate localization when plates appear tilted or rotated, enabling more appropriate cropping for subsequent restoration.
+### YOLOv8m-OBB detection
 
-### 3. Modified DeblurGAN Architecture
-We developed a modified DeblurGAN-style architecture incorporating Line-Curve blocks that combine horizontal and vertical strip convolutions with deformable convolution. The restoration framework uses pixel, edge, perceptual, and adversarial loss components to investigate the restoration of blurred license plate images.
+| Metric | Reported validation result |
+|---|---:|
+| Precision | 97.4% |
+| Recall | 98.5% |
+| mAP@0.5 | 99.3% |
+| mAP@0.5:0.95 | 90.3% |
 
-### 4. Multi-Stage Research Workflow
-The project explores complementary detection and restoration stages, from oriented license plate localization to deblurring. The notebooks document the individual experimental workflows; fully integrated inference and performance claims are included only where implemented and evaluated.
+These are detection metrics, not character-recognition/OCR accuracy.
 
-### Reproducibility and Evaluation
-Evaluation results, dataset statistics, hardware details, and experimental configurations will be reported based on verified runs. Dataset access is subject to applicable privacy, licensing, and research permissions.
+### Deblurring-model comparison
 
-## Repository structure
+| Model | PSNR (dB) ↑ | SSIM ↑ | MAE ↓ |
+|---|---:|---:|---:|
+| Pix2Pix | 27.32 | 0.8477 | 7.80 |
+| DeblurGAN-v1 | 27.53 | 0.8316 | 7.68 |
+| DeblurGAN-v2 | 29.19 | 0.8878 | 6.18 |
+| FMD-cGAN | 29.80 | 0.8962 | 5.96 |
+| DRSN-GAN | 29.98 | 0.9059 | 5.83 |
+| **Line-Curve Block DeblurGAN (proposed)** | **31.81** | **0.9272** | **4.95** |
+| U-Net | 32.32 | 0.9310 | 4.42 |
+| NAFNet | 33.92 | 0.9443 | 3.75 |
 
-```text
-.
-├── README.md
-├── requirements-common.txt
-├── .gitignore
-├── notebooks/
-│   ├── 01_prepare_plate_dataset.ipynb
-│   ├── 02_train_yolov8m_obb.ipynb
-│   └── 03_train_modified_deblurgan.ipynb
-└── results/
-    └── qualitative/   # Add a few approved before/after examples here
-```
+Higher PSNR and SSIM are better; lower MAE is better. The proposed model improves on the original DeblurGAN-v2 in this reported comparison, while U-Net and NAFNet obtain better numerical image-quality metrics. The proposed architecture is presented as a structure-aware GAN-based approach, not as the best model on every metric.
 
-## Notebooks
+### Results by blur type
 
-### 1. `01_train_yolov8m_obb.ipynb`
+| Blur type | PSNR (dB) ↑ | SSIM ↑ | MAE ↓ |
+|---|---:|---:|---:|
+| Defocus blur | 33.70 | 0.9466 | 4.00 |
+| Motion blur | 29.92 | 0.9077 | 5.89 |
 
-- Checks image/label pairs and annotation validity.
-- Creates reproducible train/validation/test splits (80/10/10 by default).
-- Trains YOLOv8m-OBB and evaluates the held-out test split.
-- Reports precision, recall, mAP@0.5, and mAP@0.5:0.95.
+The thesis reports weaker results for motion blur than for defocus blur. It also notes limitations including primarily synthetic blur, one fixed data split, and limited validation on real camera blur and other real-world degradations.
 
-### 2. `02_prepare_plate_dataset.ipynb`
+## Qualitative Results
 
-- Generates aligned clean, motion-blurred, and defocus-blurred image sets.
-- Uses PyTorch XPU for the Intel GPU path described in the notebook.
+The thesis includes a qualitative comparison of a sharp reference plate, the proposed Line-Curve Block DeblurGAN, U-Net, and NAFNet. The comparison discusses character-shape fidelity as well as visual sharpness. **The figure itself has not yet been added as an image to this repository.** Add it under `results/qualitative/` only if the project team/supervisor approves public release and any plate details are appropriately protected.
 
- 
+## Repository Contents
 
-### 3. `03_train_modified_deblurgan.ipynb`
+The code folder currently lives inside `bangla-license-plate-github-starter/`:
 
-- Trains a generator with Line-Curve blocks for plate-image restoration.
-- Uses L1 pixel loss, Sobel edge loss, VGG19 perceptual loss, and adversarial loss.
-- Evaluates restoration with PSNR, SSIM, and MAE.
-- The notebook currently selects `torch.device("cuda")`; it therefore expects a compatible CUDA-enabled PyTorch setup unless you deliberately adapt and validate the accelerator code.
+- [Research notebooks](bangla-license-plate-github-starter/notebooks/)
+- [Qualitative results folder](bangla-license-plate-github-starter/results/qualitative/)
+- [Common requirements](bangla-license-plate-github-starter/requirements-common.txt)
 
+The notebooks require local dataset paths and compatible accelerator-specific PyTorch installations. The current experiments use different accelerator paths; consult each notebook before setting up an environment. Dataset files and trained checkpoints are not included in this repository.
 
-## Environment and setup
+## Reproducibility and Responsible Use
 
-Python 3.11 is the version described in the project notebooks. Create separate virtual environments if you need both Intel XPU training and NVIDIA CUDA deblurring. Do **not** install XPU-only and CUDA-only PyTorch builds into the same environment.
+- Report results with the corresponding split, configuration, and checkpoint details; do not present validation metrics as test metrics.
+- Do not claim OCR accuracy or a fully evaluated end-to-end recognition system, because OCR is outside the implemented scope described in the thesis.
+- Do not publish private data, credentials, student IDs, or vehicle-plate images without appropriate permission.
+- Confirm with the project team and supervisor that the code, results, and any thesis-derived figures are approved for public release.
 
-1. Install Python and Git, then clone this repository.
-2. Create/activate a virtual environment.
-3. Install the common packages:
+## Related Academic Work
 
-   ```bash
-   pip install -r requirements-common.txt
-   ```
+**Thesis title:** *Multi-staged Deep Learning Framework for Detection and Restoration of Motion-Blur and Distorted Bangla License Plates*.
 
-4. Install the PyTorch build that matches the accelerator for the notebook you want to run. Follow the current official PyTorch installation instructions for Intel XPU or NVIDIA CUDA. The first two notebooks target Intel XPU; the deblurring notebook currently targets CUDA.
-5. In the detection environment, install Ultralytics after installing the correct PyTorch build: `pip install ultralytics`.
-6. Open the repository folder in VS Code, install the Jupyter extension, and select the same virtual environment as the notebook kernel.
-7. Edit the dataset/project paths in the configuration cells. The path values in these cleaned copies are placeholders.
-8. Make sure you have the dataset in the expected layout before running any training cell. The raw dataset is not included in this repository.
-
-The common packages are listed in `requirements-common.txt`. Accelerator-specific PyTorch installation is intentionally kept separate to avoid accidentally installing the wrong build.
-
-## Data and trained weights
-
-Dataset images, generated blur sets, training checkpoints (`.pt` / `.pth`), and machine-specific outputs are excluded from Git. Follow the dataset's own license and privacy restrictions. Do not publish real license-plate images unless you have permission and a lawful basis to share them; use synthetic, blurred, or otherwise approved examples for the public demo.
-
-## Results
-
-Add only results produced by your actual final run. Recommended reporting:
-
-- **Detection:** precision, recall, mAP@0.5, mAP@0.5:0.95 on the held-out test set.
-- **Deblurring:** PSNR, SSIM, and MAE on a clearly identified validation/test split.
-- **Qualitative comparison:** a small approved panel showing blurred input, restored output, and clean reference.
-
-Include the hardware, data split, and checkpoint/configuration used for each reported result. Do not report validation performance as test performance, and do not insert figures or metric values until you verify the final run.
-
-## Limitations
-
-- Dataset paths and local data are user-configured and are not bundled here.
-- The notebooks target different accelerator backends (Intel XPU for preparation/detection; CUDA for the current deblurring code).
-- Deblurring can introduce visual details that are not guaranteed to match the original plate. Restored images should not be treated as verified identity evidence without human review.
-- This repository presents the implemented notebook workflows; describe OCR or end-to-end recognition as implemented only if you add and evaluate that code.
-
-## Credits and research integrity
-
-This is based on a team research project. Before making the repository public, confirm with your teammates and supervisor that the code and any results are approved for release. Add the agreed author list, each person's actual contributions, dataset acknowledgements, and relevant citations here. Do not publish student IDs, private data, or the full thesis PDF unless everyone with the relevant rights has approved it.
+The thesis is a team submission to the Department of Computer Science and Engineering, BRAC University (2026). Add a public thesis link here only if the approved thesis is permitted to be shared publicly.

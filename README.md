@@ -13,7 +13,10 @@ A research project on detecting tilted or rotated Bangla vehicle license plates 
 
 ## Dataset
 
-**[Browse the dataset on Roboflow]([https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true](https://universe.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb))**
+[**[Browse the dataset on Roboflow]([https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true](https://universe.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb))**](https://universe.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb
+
+**[Browse the dataset on Roboflow](https://universe.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb)**
+)
 
 The thesis describes experiments using 1,991 clean license-plate images, with synthetic defocus-blur and motion-blur samples generated for paired restoration experiments. The reported restoration setup used an 80%/10%/10% train/validation/test split based on clean images, with paired samples generated for the blur conditions.
 

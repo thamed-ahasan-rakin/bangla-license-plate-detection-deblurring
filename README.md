@@ -50,7 +50,7 @@ These are detection metrics, not character-recognition/OCR accuracy.
 | U-Net | 32.32 | 0.9310 | 4.42 |
 | NAFNet | 33.92 | 0.9443 | 3.75 |
 
-Higher PSNR and SSIM are better; lower MAE is better. The proposed model improves on the original DeblurGAN-v2 in this reported comparison, while U-Net and NAFNet obtain better numerical image-quality metrics. The proposed architecture is presented as a structure-aware GAN-based approach, not as the best model on every metric.
+Higher PSNR and SSIM are better; lower MAE is better. The proposed model improves on the original DeblurGAN-v2 in this reported comparison, while U-Net and NAFNet obtain better numerical image-quality metrics. The proposed architecture is presented as a structure-aware GAN-based approach, not as the best model on every metric. comparison of our proposed model with u-net and NAFNet  ![Qualitative comparison of deblurring models](results/qualitative/figure-5-1-qualitative-comparison.png)
 
 ### Results by blur type
 
@@ -63,7 +63,7 @@ The thesis reports weaker results for motion blur than for defocus blur. It also
 
 ## Qualitative Results
 
-The thesis includes a qualitative comparison of a sharp reference plate, the proposed Line-Curve Block DeblurGAN, U-Net, and NAFNet. The comparison discusses character-shape fidelity as well as visual sharpness. **The figure itself has not yet been added as an image to this repository.** Add it under `results/qualitative/` only if the project team/supervisor approves public release and any plate details are appropriately protected.
+The thesis includes a qualitative comparison of a sharp reference plate, the proposed Line-Curve Block DeblurGAN, U-Net, and NAFNet. The comparison discusses character-shape fidelity as well as visual sharpness.![Qualitative comparison of deblurring models](results/qualitative/figure-5-1-qualitative-comparison.png)
 
 
 ## Repository Contents

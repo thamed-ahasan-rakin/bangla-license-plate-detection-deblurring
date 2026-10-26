@@ -50,7 +50,8 @@ These are detection metrics, not character-recognition/OCR accuracy.
 | U-Net | 32.32 | 0.9310 | 4.42 |
 | NAFNet | 33.92 | 0.9443 | 3.75 |
 
-Higher PSNR and SSIM are better; lower MAE is better. The proposed model improves on the original DeblurGAN-v2 in this reported comparison, while U-Net and NAFNet obtain better numerical image-quality metrics. The proposed architecture is presented as a structure-aware GAN-based approach, not as the best model on every metric. comparison of our proposed model with u-net and NAFNet  ![Qualitative comparison of deblurring models](results/qualitative/figure-5-1-qualitative-comparison.png)
+Higher PSNR and SSIM are better; lower MAE is better. The proposed model improves on the original DeblurGAN-v2 in this reported comparison, while U-Net and NAFNet obtain better numerical image-quality metrics. The proposed architecture is presented as a structure-aware GAN-based approach, not as the best model on every metric. The visual comparison of our proposed model with u-net and NAFNet:
+![Qualitative comparison of deblurring models](results/qualitative/figure-5-1-qualitative-comparison.png)
 
 ### Results by blur type
 

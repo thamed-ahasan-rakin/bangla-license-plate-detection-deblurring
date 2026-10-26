@@ -6,14 +6,14 @@ A research project on detecting tilted or rotated Bangla vehicle license plates 
 
 ## Research Contributions
 
-- **Dataset development:** I created and prepared the dataset used in this research. The image collection, annotations, and preprocessing support experiments in oriented license-plate localization and image restoration.
+- **Dataset development:** we created and prepared the dataset used in this research. The image collection, annotations, and preprocessing support experiments in oriented license-plate localization and image restoration.
 - **Oriented detection:** YOLOv8m-OBB was trained to localize tilted or rotated Bangla license plates using oriented bounding boxes, helping produce plate crops for restoration.
 - **Modified deblurring architecture:** The proposed Line-Curve Block DeblurGAN adds parallel horizontal (1 × 7), vertical (7 × 1), and deformable-convolution branches. The branches are fused, with channel attention and a residual formulation, to model directional and curved details in Bangla plate characters.
 - **Multi-stage workflow:** The research combines plate localization, crop rectification, and image deblurring. Character recognition/OCR is **not included** in the implemented scope described by the thesis.
 
 ## Dataset
 
-**[Browse the dataset on Roboflow](https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true)**
+**[Browse the dataset on Roboflow]([https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true](https://universe.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb))**
 
 The thesis describes experiments using 1,991 clean license-plate images, with synthetic defocus-blur and motion-blur samples generated for paired restoration experiments. The reported restoration setup used an 80%/10%/10% train/validation/test split based on clean images, with paired samples generated for the blur conditions.
 

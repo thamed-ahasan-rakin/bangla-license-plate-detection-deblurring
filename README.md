@@ -65,15 +65,17 @@ The thesis reports weaker results for motion blur than for defocus blur. It also
 
 The thesis includes a qualitative comparison of a sharp reference plate, the proposed Line-Curve Block DeblurGAN, U-Net, and NAFNet. The comparison discusses character-shape fidelity as well as visual sharpness. **The figure itself has not yet been added as an image to this repository.** Add it under `results/qualitative/` only if the project team/supervisor approves public release and any plate details are appropriately protected.
 
+
 ## Repository Contents
 
-The code folder currently lives inside `bangla-license-plate-github-starter/`:
+The repository contains research notebooks, project dependencies, and a folder for qualitative restoration results.
 
-- [Research notebooks](bangla-license-plate-github-starter/notebooks/)
-- [Qualitative results folder](bangla-license-plate-github-starter/results/qualitative/)
-- [Common requirements](bangla-license-plate-github-starter/requirements-common.txt)
+- [Research notebooks](https://github.com/thamed-ahasan-rakin/bangla-license-plate-detection-deblurring/tree/main/notebooks)
+- [Qualitative results](https://github.com/thamed-ahasan-rakin/bangla-license-plate-detection-deblurring/tree/main/results/qualitative)
+- [Common requirements](https://github.com/thamed-ahasan-rakin/bangla-license-plate-detection-deblurring/blob/main/requirements-common.txt)
 
 The notebooks require local dataset paths and compatible accelerator-specific PyTorch installations. The current experiments use different accelerator paths; consult each notebook before setting up an environment. Dataset files and trained checkpoints are not included in this repository.
+
 
 ## Reproducibility and Responsible Use
 

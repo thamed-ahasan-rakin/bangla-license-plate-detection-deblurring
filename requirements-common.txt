@@ -9,3 +9,6 @@ PyYAML
 tqdm
 jupyter
 ipykernel
+torch 
+torchvision
+ultralytics

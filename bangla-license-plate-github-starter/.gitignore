@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local datasets and generated processing outputs
+data/
+dataset/
+datasets/
+processed_dataset/
+dataset_80_10_10/
+removed_invalid_samples/
+
+# Model checkpoints / weights
+checkpoints*/
+*.pt
+*.pth
+*.onnx
+*.engine
+
+# Training outputs
+runs_obb/
+runs/
+outputs/
+logs/
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/

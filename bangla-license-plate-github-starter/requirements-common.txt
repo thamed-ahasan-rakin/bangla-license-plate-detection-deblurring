@@ -1,0 +1,11 @@
+# Common Python packages used by the notebooks.
+# Install accelerator-specific torch/torchvision separately for your hardware.
+numpy
+Pillow
+opencv-python
+matplotlib
+pandas
+PyYAML
+tqdm
+jupyter
+ipykernel

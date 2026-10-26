@@ -13,6 +13,27 @@ The project investigates two complementary tasks:
 
 A data-preparation notebook rectifies OBB crops and generates clean, motion-blurred, and defocus-blurred plate images. The notebooks are organized by workflow stage; use them as separate experiments unless you have also prepared and tested an end-to-end inference script.
 
+## Key Research Contributions
+
+This project investigates a multi-stage deep-learning framework for detecting and restoring distorted Bangla vehicle license plates.
+
+### 1. Self-Developed Dataset
+We independently collected and prepared a dataset for our research on Bangla license plate detection and image restoration. The data preparation workflow includes plate annotation and preprocessing for detection and deblurring experiments.
+
+Dataset link : https://app.roboflow.com/thamed-ahasan-rakin/bengali-vehicle-images-made-for-yolov8m-obb/browse?queryText=&pageSize=100&startingIndex=0&browseQuery=true
+
+### 2. Oriented License Plate Detection
+We trained and evaluated a YOLOv8m-OBB model to localize Bangla license plates using oriented bounding-box annotations. This approach is designed to support plate localization when plates appear tilted or rotated, enabling more appropriate cropping for subsequent restoration.
+
+### 3. Modified DeblurGAN Architecture
+We developed a modified DeblurGAN-style architecture incorporating Line-Curve blocks that combine horizontal and vertical strip convolutions with deformable convolution. The restoration framework uses pixel, edge, perceptual, and adversarial loss components to investigate the restoration of blurred license plate images.
+
+### 4. Multi-Stage Research Workflow
+The project explores complementary detection and restoration stages, from oriented license plate localization to deblurring. The notebooks document the individual experimental workflows; fully integrated inference and performance claims are included only where implemented and evaluated.
+
+### Reproducibility and Evaluation
+Evaluation results, dataset statistics, hardware details, and experimental configurations will be reported based on verified runs. Dataset access is subject to applicable privacy, licensing, and research permissions.
+
 ## Repository structure
 
 ```text
@@ -50,6 +71,7 @@ A data-preparation notebook rectifies OBB crops and generates clean, motion-blur
 - Uses L1 pixel loss, Sobel edge loss, VGG19 perceptual loss, and adversarial loss.
 - Evaluates restoration with PSNR, SSIM, and MAE.
 - The notebook currently selects `torch.device("cuda")`; it therefore expects a compatible CUDA-enabled PyTorch setup unless you deliberately adapt and validate the accelerator code.
+
 
 ## Environment and setup
 
